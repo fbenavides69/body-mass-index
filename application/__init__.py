@@ -9,6 +9,7 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import url_for
+from flask import session
 from flask_bootstrap import Bootstrap
 from flask_security import Security
 from flask_security import SQLAlchemyUserDatastore
@@ -107,6 +108,7 @@ def create_app():
     @app.route('/home', methods=['GET', 'POST'])
     @login_required
     def home():
-        return render_template('home.html')
+        user = User.query.filter_by(id=session['user_id']).first()
+        return render_template('home.html', user=user.email)
 
     return app
