@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+{% block title %} {{ _('Home') }} {% endblock %}
+
+{% block mynav %}
+
+    <li><a href="{{ url_for_security('logout') }}">Logout</a></li>
+
+{% endblock mynav %}
+
+{% block mycontent %}
+
+    <h1>{{ _('Home') }}</h1>
+
+{% endblock mycontent %}

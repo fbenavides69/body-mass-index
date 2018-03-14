@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %} {{ _('index') }} {% endblock %}
+
+{% block mynav %}
+
+    <li><a href="{{ url_for_security('register') }}">Register</a></li>
+    <li><a href="{{ url_for_security('login') }}">Login</a></li>
+
+{% endblock mynav %}
+
+{% block mycontent %}
+
+    <div class="jumbotron text-center">
+
+        <h1>{{ _('Welcome') }}</h1>
+
+    </div>
+
+{% endblock mycontent %}
