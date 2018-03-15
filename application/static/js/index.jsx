@@ -19,11 +19,12 @@ class BmiReactForm extends React.Component {
 
     handleChange(input, value) {
 
-        this.setState({[input]: value});
+        this.setState({[input]: value}, () => {
+            const height = parseFloat(this.state.height).toFixed(2);
+            const weight = parseFloat(this.state.weight).toFixed(2);
+            this.bmiCalc(height, weight);
+        });
 
-        const height = parseFloat(this.state.height).toFixed(2);
-        const weight = parseFloat(this.state.weight).toFixed(2);
-        this.bmiCalc(height, weight);
     }
 
     bmiCalc(height, weight) {
@@ -80,14 +81,14 @@ class BmiReactForm extends React.Component {
                 <form>
                     <input id="csrf_token" name="csrf_token" type="hidden" value="IjFhOWU1NTg2OWFiYTA0NTMzYjhhMDM5YWRhOGNjOThhMTk1MDJiNjEi.DYtlyQ.k8gVqs8uX9TLTOrnTF3aeOJXjoY" />
                     <p>
-                        <label>Height</label> <input class="form-control"
+                        <label>Height (m)</label> <input class="form-control"
                             id="height" type="text"
                             name="height"
                             placeholder={this.state.height}
                             onChange={e => this.handleChange('height', e.target.value)} />
                     </p>
                     <p>
-                        <label>Weight</label> <input class="form-control"
+                        <label>Weight (Kg)</label> <input class="form-control"
                             id="weight" type="text"
                             name="weight"
                             placeholder={this.state.weight}
