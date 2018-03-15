@@ -6,7 +6,6 @@
 import os
 from flask import Flask
 from flask import render_template
-from flask import session
 from flask_bootstrap import Bootstrap
 from flask_security import Security
 from flask_security import SQLAlchemyUserDatastore
@@ -48,15 +47,10 @@ def create_app():
 
     # Define models
 
-    class RolesUsers(db.Model):
-        __tablename__ = 'roles_users'
-
-        id = db.Column(db.Integer(), primary_key=True)
-        user_id = db.Column('user_id', db.Integer(), db.ForeignKey('user.id'))
-        role_id = db.Column('role_id', db.Integer(), db.ForeignKey('role.id'))
-
-        def __repr__(self):
-            return '<RoleUser> {} {}'.format(self.role_id, self.user_id)
+    roles_users = db.Table(
+        'roles_users',
+        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
     class Role(db.Model, RoleMixin):
         __tablename__ = 'role'
@@ -78,17 +72,20 @@ def create_app():
         confirmed_at = db.Column(db.DateTime())
         roles = db.relationship(
             'Role',
-            secondary='roles_users',
+            secondary=roles_users,
             backref=db.backref('users', lazy='dynamic'))
+
+        def __repr__(self):
+            return '<User> {} {}'.format(self.mail, self.email)
+
+    # Setup Flask-Security
+    user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+    security = Security(app, user_datastore)
 
     @app.before_first_request
     def before_first_request():
         # Create any database tables that don't exist yet.
         db.create_all()
-
-    # Setup Flask-Security
-    user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-    security = Security(app, user_datastore)
 
     # Initialize bootstrap
     Bootstrap(app)
@@ -105,7 +102,6 @@ def create_app():
     @app.route('/bmi', methods=['GET', 'POST'])
     @login_required
     def bmi():
-        user = User.query.filter_by(id=session['user_id']).first()
-        return render_template('bmi.html', user=user.email)
+        return render_template('bmi.html')
 
     return app

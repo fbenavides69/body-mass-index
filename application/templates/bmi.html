@@ -10,7 +10,7 @@
 {% endblock mynav %}
 
 {% block mycontent %}
-    <p class="text-right">[<strong>{{user}}</strong>]</p>
+    <p class="text-right">[<strong>{{current_user.email}}</strong>]</p>
     <h1>{{ _('BMI Calculator') }}</h1>
 
     <div id="BmiReactForm" />
