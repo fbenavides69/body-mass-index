@@ -2,8 +2,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+/*
+ * BMI React Form
+ * Two input fields are created to tak in both the height (m) and the
+ * weight (Kg). The state is used to convey the fields data in order to
+ * calculate the BMI factor and thus select the corresponding category.
+ * 
+ */
 class BmiReactForm extends React.Component {
 
+    /* State values initialization */
     constructor(props) {
 
         super(props);
@@ -17,9 +25,11 @@ class BmiReactForm extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    /* Update the corresponsing state value, once done, calculate the BMI */
     handleChange(input, value) {
 
         this.setState({[input]: value}, () => {
+
             const height = parseFloat(this.state.height).toFixed(2);
             const weight = parseFloat(this.state.weight).toFixed(2);
             this.bmiCalc(height, weight);
@@ -27,12 +37,16 @@ class BmiReactForm extends React.Component {
 
     }
 
+    /* Calculate the BMI (Body Mass Index) */
     bmiCalc(height, weight) {
 
+        /* Only positive values are allowed for the calculation to proceed */
         if ((height > 0) && (weight > 0)) {
 
+            /* BMI formula - get the factor */
             let bmiNumber = weight/(height * height);
 
+            /* BMI formula - get the corresponding category */
             let bmiString = 'Undefined'
             switch(true) {
                 case (bmiNumber < 15):
@@ -73,9 +87,11 @@ class BmiReactForm extends React.Component {
 
     render() {
 
+        /* Assign the BMI factor and category to be displayed */
         const factor = this.state.factor;
         const category = this.state.category;
 
+        /* Display the input fields and publish the factor and category */
         return (
             <div>
                 <form>
