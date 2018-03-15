@@ -99,3 +99,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# JavaScript/React 
+node_modules/
+yarn.lock
+

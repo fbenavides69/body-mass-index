@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% from "security/_macros.html" import render_field_with_errors, render_field %}
 
-{% block title %} {{ _('Home') }} {% endblock %}
+{% block title %} {{ _('BMI') }} {% endblock %}
 
 {% block mynav %}
 
@@ -11,6 +11,12 @@
 
 {% block mycontent %}
     <p class="text-right">[<strong>{{user}}</strong>]</p>
-    <h1>{{ _('Home') }}</h1>
+    <h1>{{ _('BMI Calculator') }}</h1>
+
+    <div id="BmiReactForm" />
 
 {% endblock mycontent %}
+
+{% block scripts %}
+    <script src="{{url_for('static', filename='dist/bundle.js')}}" type="text/javascript"></script>
+{% endblock scripts%}

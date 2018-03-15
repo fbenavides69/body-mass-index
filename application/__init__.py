@@ -6,9 +6,6 @@
 import os
 from flask import Flask
 from flask import render_template
-from flask import request
-from flask import redirect
-from flask import url_for
 from flask import session
 from flask_bootstrap import Bootstrap
 from flask_security import Security
@@ -41,9 +38,9 @@ def create_app():
     app.config['SECURITY_PASSWORD_SALT'] = os.urandom(32)
     app.config['SECURITY_REGISTERABLE'] = True
     app.config['SECURITY_SEND_REGISTER_EMAIL'] = False
-    app.config['SECURITY_POST_LOGIN_VIEW'] = '/home'
+    app.config['SECURITY_POST_LOGIN_VIEW'] = '/bmi'
     app.config['SECURITY_POST_LOGOUT_VIEW'] = '/'
-    app.config['SECURITY_POST_REGISTER_VIEW'] = '/home'
+    app.config['SECURITY_POST_REGISTER_VIEW'] = '/bmi'
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
     # Create database connection object
@@ -105,10 +102,10 @@ def create_app():
     def index():
         return render_template('index.html')
 
-    @app.route('/home', methods=['GET', 'POST'])
+    @app.route('/bmi', methods=['GET', 'POST'])
     @login_required
-    def home():
+    def bmi():
         user = User.query.filter_by(id=session['user_id']).first()
-        return render_template('home.html', user=user.email)
+        return render_template('bmi.html', user=user.email)
 
     return app
