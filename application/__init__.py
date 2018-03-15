@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-''' Flask Application Factory
+''' BMI - Body Mass Index Challenge
 
-    Flask application using the factory pattern
+    Allows a given user to register and login to calculate the BMI.
 '''
 import os
 from flask import Flask
@@ -18,12 +18,16 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 def create_app():
     ''' create_app
+        Following the factory pattern, this function creates an Flask
+        web application that allows a user to both register and login
+        to a calculator page where by inputing the height (m) and
+        weight (Kg), the BMI factor and category are generated.
 
-        input:
+        Args:
             None
 
-        output:
-            app -- flask web application instance
+        Returns:
+            app (object)-- flask web application instance
 
         Setup web interface with Bootstrap framework
     '''
@@ -47,12 +51,20 @@ def create_app():
 
     # Define models
 
+    ''' Roles-Users Table
+        Flask-Security model, contains the many-to-many relationship between
+        the User and Role tables.
+    '''
     roles_users = db.Table(
         'roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
         db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
     class Role(db.Model, RoleMixin):
+        ''' Role Table
+            Flask-Security model, contains the allowed user roles and their
+            description.
+        '''
         __tablename__ = 'role'
 
         id = db.Column(db.Integer(), primary_key=True)
@@ -63,6 +75,12 @@ def create_app():
             return '<Role> {}'.format(self.name)
 
     class User(db.Model, UserMixin):
+        ''' User Table
+            Flask-Security model, contains the user details to allow
+            registration and login, as well as authorization.
+            It works in conjunction with the Roles table though the
+            many-to-may roles_users table.
+        '''
         __tablename__ = 'user'
 
         id = db.Column(db.Integer, primary_key=True)
@@ -76,7 +94,7 @@ def create_app():
             backref=db.backref('users', lazy='dynamic'))
 
         def __repr__(self):
-            return '<User> {} {}'.format(self.mail, self.email)
+            return '<User> {} {}'.format(self.id, self.email)
 
     # Setup Flask-Security
     user_datastore = SQLAlchemyUserDatastore(db, User, Role)
@@ -84,7 +102,7 @@ def create_app():
 
     @app.before_first_request
     def before_first_request():
-        # Create any database tables that don't exist yet.
+        ''''Create any database tables that don't exist yet '''
         db.create_all()
 
     # Initialize bootstrap
@@ -97,11 +115,13 @@ def create_app():
 
     @app.route('/', methods=['GET'])
     def index():
+        ''' Application entry '''
         return render_template('index.html')
 
     @app.route('/bmi', methods=['GET', 'POST'])
     @login_required
     def bmi():
+        ''' BMI Calculator '''
         return render_template('bmi.html')
 
     return app
