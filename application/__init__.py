@@ -16,7 +16,7 @@ from flask_security import login_required
 from flask_debugtoolbar import DebugToolbarExtension
 
 
-def create_app():
+def create_app(database):
     ''' create_app
         Following the factory pattern, this function creates an Flask
         web application that allows a user to both register and login
@@ -37,7 +37,7 @@ def create_app():
     app.config['DEBUG'] = True
     app.config['SECRET_KEY'] = \
         '*id4)fbbiyd*57oa18da3^t0$)m%ti#9ua+t^ihd4z9t*x%&sx'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/bmi.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = database
     app.config['SECURITY_PASSWORD_SALT'] = os.urandom(32)
     app.config['SECURITY_REGISTERABLE'] = True
     app.config['SECURITY_SEND_REGISTER_EMAIL'] = False
