@@ -104,3 +104,5 @@ ENV/
 node_modules/
 yarn.lock
 
+# Pytest
+.pytest_cache/

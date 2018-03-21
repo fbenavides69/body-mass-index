@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+const webpack = require('webpack');
 
 const config = {
     entry: __dirname + '/js/index.jsx',
@@ -7,7 +7,7 @@ const config = {
         filename: 'bundle.js',
     },
     resolve: {
-        extensions: ['.js', 'jsx', '.css']
+        extensions: ['.js', '.jsx', '.css']
     },
     module: {
         rules: [
@@ -17,9 +17,7 @@ const config = {
                 use: 'babel-loader'
             }
         ]
-    },
-    mode: 'development',
+    }
 };
 
 module.exports = config;
-

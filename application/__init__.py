@@ -24,7 +24,7 @@ def create_app(database):
         weight (Kg), the BMI factor and category are generated.
 
         Args:
-            None
+            database -- database definition to be used
 
         Returns:
             app (object)-- flask web application instance
@@ -38,6 +38,7 @@ def create_app(database):
     app.config['SECRET_KEY'] = \
         '*id4)fbbiyd*57oa18da3^t0$)m%ti#9ua+t^ihd4z9t*x%&sx'
     app.config['SQLALCHEMY_DATABASE_URI'] = database
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECURITY_PASSWORD_SALT'] = os.urandom(32)
     app.config['SECURITY_REGISTERABLE'] = True
     app.config['SECURITY_SEND_REGISTER_EMAIL'] = False
@@ -124,4 +125,4 @@ def create_app(database):
         ''' BMI Calculator '''
         return render_template('bmi.html')
 
-    return app
+    return app, db
