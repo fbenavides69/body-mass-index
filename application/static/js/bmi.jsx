@@ -1,4 +1,4 @@
-// App.jsx
+// bmi.jsx
 import React from "react";
 
 /*
@@ -27,7 +27,7 @@ export default class BmiReactForm extends React.Component {
     /* Update the corresponsing state value, once done, calculate the BMI */
     handleChange(input, value) {
 
-        this.setState({[input]: value}, () => {
+        this.setState({[input]: value}, (prevState, props) => {
 
             const height = parseFloat(this.state.height).toFixed(2);
             const weight = parseFloat(this.state.weight).toFixed(2);

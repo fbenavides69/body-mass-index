@@ -41,6 +41,7 @@ def create_app(database):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECURITY_PASSWORD_SALT'] = os.urandom(32)
     app.config['SECURITY_REGISTERABLE'] = True
+    app.config['SECURITY_LOGIN_WITHOUT_CONFIRMATION'] = True
     app.config['SECURITY_SEND_REGISTER_EMAIL'] = False
     app.config['SECURITY_POST_LOGIN_VIEW'] = '/bmi'
     app.config['SECURITY_POST_LOGOUT_VIEW'] = '/'
