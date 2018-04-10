@@ -21,6 +21,7 @@ this application:
     pyenv virtualenv 2.7.14 bmi27 | pyenv virtualenv 3.6.3 bmi36
     pyenv activate bmi27 | pyenv activate bmi36
     pip install -r requirements.txt
+    nodeenv -p
     cd application/static
     yarn install
     yarn build
